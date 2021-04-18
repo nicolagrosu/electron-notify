@@ -45,10 +45,10 @@ AnimationQueue.prototype.clear = function() {
 }
 
 let config = {
-  width: 300,
-  height: 65,
-  padding: 10,
-  borderRadius: 5,
+  width: 400,
+  height: 100,
+  padding: 15,
+  borderRadius: 8,
   displayTime: 5000,
   animationSteps: 5,
   animationStepMs: 5,
@@ -60,29 +60,30 @@ let config = {
     backgroundColor: '#f0f0f0',
     overflow: 'hidden',
     padding: 8,
+    paddingRight: 15,
     border: '1px solid #CCC',
     fontFamily: 'Arial',
-    fontSize: 12,
+    fontSize: 15,
     position: 'relative',
-    lineHeight: '15px'
+    lineHeight: '17px'
   },
   defaultStyleAppIcon: {
     overflow: 'hidden',
     float: 'left',
-    height: 40,
-    width: 40,
-    marginRight: 10,
+    height: 60,
+    width: 60,
+    marginRight: 15,
   },
   defaultStyleImage: {
     overflow: 'hidden',
     float: 'right',
-    height: 40,
-    width: 40,
-    marginLeft: 10,
+    height: 60,
+    width: 60,
+    marginLeft: 15,
   },
   defaultStyleClose: {
     position: 'absolute',
-    top: 1,
+    top: 4,
     right: 3,
     fontSize: 11,
     color: '#CCC'
