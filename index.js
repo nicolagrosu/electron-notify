@@ -102,7 +102,10 @@ let config = {
     acceptFirstMouse: true,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
-      allowDisplayingInsecureContent: true
+      allowDisplayingInsecureContent: true,
+      nodeIntegration: true,
+      contextIsolation: false,
+      enableRemoteModule: true,
     }
   },
   htmlTemplate: '<html>\n'
