@@ -1,22 +1,21 @@
 {
   "name": "electron-notify",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Nice and simple notifications for Electron apps",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Hank Bao",
+  "author": "Hank Bao, Marco Ancona",
   "license": "MIT",
   "dependencies": {
-    "async": "^0.9.0",
-    "lodash": "^2.4.1"
+    "async": "^3.2.0"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/hankbao/electron-notify"
+    "url": "https://github.com/minetime-ai/electron-notify"
   },
   "devDependencies": {
-    "eslint": "^0.21.2"
+    "eslint": "^7.24.0"
   }
 }
