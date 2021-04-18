@@ -102,26 +102,11 @@ let config = {
     acceptFirstMouse: true,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
-      allowDisplayingInsecureContent: true,
       nodeIntegration: true,
       contextIsolation: false,
       enableRemoteModule: true,
     }
-  },
-  htmlTemplate: '<html>\n'
-  + '<head></head>\n'
-  + '<body style="overflow: hidden; -webkit-user-select: none;">\n'
-  + '<div id="container">\n'
-  + ' <img src="" id="appIcon" />\n'
-  + ' <img src="" id="image" />\n'
-  + ' <div id="text">\n'
-  + '   <b id="title"></b>\n'
-  + '   <p id="message"></p>\n'
-  + ' </div>\n'
-  + ' <div id="close">X</div>\n'
-  + '</div>\n'
-  + '</body>\n'
-  + '</html>'
+  }
 }
 
 function setConfig(customConfig) {
