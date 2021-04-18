@@ -274,7 +274,10 @@ function showNotification(notificationObj) {
           delete notificationWindow.electronNotifyOnCloseFunc
         }
 
-        // Set contents, ...
+        // Set contents, after deleting non-serializable objects
+        Object.keys(notificationObj).forEach(key => {
+          if (typeof notificationObj[key] === 'function') delete notificationObj[key]
+        })
         notificationWindow.webContents.send('electron-notify-set-contents', notificationObj)
         // Show window
         notificationWindow.showInactive()
