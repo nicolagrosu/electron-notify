@@ -247,10 +247,11 @@ function showNotification(notificationObj) {
           return timeoutId
         })
         let closeNotificationSafely = buildCloseNotificationSafely(closeFunc)
-        timeoutId = setTimeout(function() {
-          closeNotificationSafely('timeout')
-        }, displayTime)
-
+        if (displayTime !== 0) {
+          timeoutId = setTimeout(function() {
+            closeNotificationSafely('timeout')
+          }, displayTime)
+        }
         // Trigger onShowFunc if existent
         if (notificationObj.onShowFunc) {
           notificationObj.onShowFunc({
