@@ -134,7 +134,7 @@ Default config:
     height: 65,
     padding: 10,
     borderRadius: 5,
-    displayTime: 5000,
+    displayTime: 5000, // use -1 for infinite
     animationSteps: 5,
     animationStepMs: 5,
     animateInParallel: true,
