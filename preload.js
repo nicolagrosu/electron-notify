@@ -2,7 +2,7 @@
 
 const electron = require('electron')
 const ipc = electron.ipcRenderer
-const winId = electron.remote.getCurrentWindow().id
+const winId = require('@electron/remote').getCurrentWindow().id
 
 function setStyle(config) {
   // Style it
