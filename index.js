@@ -54,6 +54,7 @@ let config = {
   appIcon: null,
   pathToModule: '',
   logging: true,
+  mainWindowId: null,
   defaultStyleContainer: {
     backgroundColor: '#f0f0f0',
     overflow: 'hidden',
@@ -111,7 +112,7 @@ let config = {
 
 function setConfig(customConfig) {
   config = Object.assign(config, customConfig)
-  calcDimensions()
+  setupConfig()
 }
 
 function updateTemplatePath() {
@@ -159,14 +160,20 @@ function calcDimensions() {
 }
 
 function setupConfig() {
-  // Use primary display only
-  let display = screen.getPrimaryDisplay()
+  let display = null;
+
+  if (config.mainWindowId === null)
+    display = screen.getPrimaryDisplay()
+  else {
+    const winBounds = BrowserWindow.fromId(config.mainWindowId).getBounds();
+    display = screen.getDisplayNearestPoint({x: winBounds.x, y: winBounds.y});
+  }
 
   // Display notifications starting from lower right corner
   // Calc lower right corner
   config.lowerRightCorner = {}
-  config.lowerRightCorner.x = display.bounds.x + display.workArea.x + display.workAreaSize.width
-  config.lowerRightCorner.y = display.bounds.y + display.workArea.y + display.workAreaSize.height
+  config.lowerRightCorner.x = display.workArea.x + display.workAreaSize.width
+  config.lowerRightCorner.y = display.workArea.y + display.workAreaSize.height
 
   calcDimensions()
 

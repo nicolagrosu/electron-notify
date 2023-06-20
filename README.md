@@ -141,6 +141,7 @@ Default config:
     appIcon: null,
     pathToModule: '',
     logging: true,
+    mainWindowId: null, // if set notification will be generated on this display
     defaultStyleContainer: {
       backgroundColor: '#f0f0f0',
       overflow: 'hidden',
