@@ -2,9 +2,7 @@
 
 const path = require('path')
 const async = require('async')
-const electron = require('electron')
-const BrowserWindow = electron.BrowserWindow
-const ipc = electron.ipcMain
+const { app, screen, shell, ipcMain, BrowserWindow } = require('electron');
 
 // One animation at a time
 const AnimationQueue = function(options) {
@@ -104,9 +102,9 @@ let config = {
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       allowDisplayingInsecureContent: true,
-      nodeIntegration: true,
-      contextIsolation: false,
-      enableRemoteModule: true,
+      // nodeIntegration: true,
+      // contextIsolation: false,
+      // enableRemoteModule: true,
     }
   }
 }
@@ -162,7 +160,7 @@ function calcDimensions() {
 
 function setupConfig() {
   // Use primary display only
-  let display = electron.screen.getPrimaryDisplay()
+  let display = screen.getPrimaryDisplay()
 
   // Display notifications starting from lower right corner
   // Calc lower right corner
@@ -177,7 +175,9 @@ function setupConfig() {
   config.maxVisibleNotifications = config.maxVisibleNotifications > 7 ? 7 : config.maxVisibleNotifications
 }
 
-setupConfig()
+app.whenReady().then(function () {
+  setupConfig();
+});
 
 // Array of windows with currently showing notifications
 let activeNotifications = []
@@ -333,14 +333,14 @@ function buildCloseNotificationSafely(closeFunc) {
   }
 }
 
-ipc.on('electron-notify-close', function (event, winId, notificationObj) {
-  let closeFunc = buildCloseNotification(BrowserWindow.fromId(winId), notificationObj)
+ipcMain.handle('electron-notify-close', function (event, notificationObj) {
+  let closeFunc = buildCloseNotification(BrowserWindow.fromId(config.winId), notificationObj)
   buildCloseNotificationSafely(closeFunc)('close')
-})
+});
 
-ipc.on('electron-notify-click', function (event, winId, notificationObj) {
+ipcMain.handle('electron-notify-click', function (event, winId, notificationObj) {
   if (notificationObj.url) {
-    electron.shell.openExternal(notificationObj.url)
+    shell.openExternal(notificationObj.url)
   }
   let notificationWindow = BrowserWindow.fromId(winId)
   if (notificationWindow && notificationWindow.electronNotifyOnClickFunc) {
@@ -352,7 +352,7 @@ ipc.on('electron-notify-click', function (event, winId, notificationObj) {
     })
     delete notificationWindow.electronNotifyOnClickFunc
   }
-})
+});
 
 /*
 * Checks for queued notifications and add them
@@ -445,6 +445,7 @@ function getWindow() {
       windowProperties.width = config.width
       windowProperties.height = config.height
       notificationWindow = new BrowserWindow(windowProperties)
+      config.winId = notificationWindow.id;
       notificationWindow.setVisibleOnAllWorkspaces(true)
       notificationWindow.loadURL(getTemplatePath())
       notificationWindow.webContents.on('did-finish-load', function() {

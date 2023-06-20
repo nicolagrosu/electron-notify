@@ -1,8 +1,6 @@
 'use strict'
 
-const electron = require('electron')
-const ipc = electron.ipcRenderer
-const winId = require('@electron/remote').getCurrentWindow().id
+const { ipcRenderer } = require('electron');
 
 function setStyle(config) {
   // Style it
@@ -74,13 +72,13 @@ function setContents(event, notificationObj) {
   let closeButton = notiDoc.getElementById('close')
   closeButton.addEventListener('click', function(event) {
     event.stopPropagation()
-    ipc.send('electron-notify-close', winId, notificationObj)
+    ipcRenderer.invoke('electron-notify-close', notificationObj )
   })
 
   // URL
   let container = notiDoc.getElementById('container')
   container.addEventListener('click', function() {
-    ipc.send('electron-notify-click', winId, notificationObj)
+    ipcRenderer.invoke('electron-notify-click', notificationObj )
   })
 }
 
@@ -110,9 +108,9 @@ function reset() {
   closeButton.parentNode.replaceChild(newCloseButton, closeButton)
 }
 
-ipc.on('electron-notify-set-contents', setContents)
-ipc.on('electron-notify-load-config', loadConfig)
-ipc.on('electron-notify-reset', reset)
+ipcRenderer.on('electron-notify-set-contents', setContents);
+ipcRenderer.on('electron-notify-load-config', loadConfig);
+ipcRenderer.on('electron-notify-reset', reset);
 
 function log() {
   console.log.apply(console, arguments)
