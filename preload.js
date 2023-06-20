@@ -3,6 +3,17 @@
 const { ipcRenderer } = require('electron');
 
 function setStyle(config) {
+  if(config.customStyle !== null){
+    var head = document.head;
+    var link = document.createElement("link");
+
+    link.type = "text/css";
+    link.rel = "stylesheet";
+    link.href = config.customStyle;
+
+    head.appendChild(link);
+  }
+
   // Style it
   let notiDoc = global.window.document
   let container = notiDoc.getElementById('container')

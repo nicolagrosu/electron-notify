@@ -55,6 +55,7 @@ let config = {
   pathToModule: '',
   logging: true,
   mainWindowId: null,
+  customStyle: null,
   defaultStyleContainer: {
     backgroundColor: '#f0f0f0',
     overflow: 'hidden',
@@ -345,11 +346,11 @@ ipcMain.handle('electron-notify-close', function (event, notificationObj) {
   buildCloseNotificationSafely(closeFunc)('close')
 });
 
-ipcMain.handle('electron-notify-click', function (event, winId, notificationObj) {
+ipcMain.handle('electron-notify-click', function (event, notificationObj) {
   if (notificationObj.url) {
     shell.openExternal(notificationObj.url)
   }
-  let notificationWindow = BrowserWindow.fromId(winId)
+  let notificationWindow = BrowserWindow.fromId(config.winId)
   if (notificationWindow && notificationWindow.electronNotifyOnClickFunc) {
     let closeFunc = buildCloseNotification(notificationWindow, notificationObj)
     notificationWindow.electronNotifyOnClickFunc({
